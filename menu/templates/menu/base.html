@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Меню ресторана{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'menu/css/main.css' %}">
+    <link rel="icon" href="{% static 'menu/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'menu/css/styles.css' %}">
+</head>
+<body>
+     <div class="theme-switcher-container">
+        <button id="theme-toggle" aria-label="Toggle theme" title="Сменить тему">
+            <span class="light-icon">🌞</span>
+            <span class="dark-icon">🌙</span>
+        </button>
+    </div>
+    <div class="header">
+        <h1>Меню ресторана "Чиморил"</h1>
+    </div>
+
+    <div class="main-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="{% static 'menu/js/script.js' %}"></script>
+
+    {% block extra_scripts %}
+    {% endblock %}
+    <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+    </script>
+</body>
+</html>

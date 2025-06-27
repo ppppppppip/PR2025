@@ -1,0 +1,54 @@
+{% extends 'menu/base.html' %}
+{% load static %}
+
+{% block title %}Меню ресторана{% endblock %}
+
+{% block content %}
+<div class="floating-telegram-btn">
+    <a href="https://t.me/RestikPR_bot" target="_blank">
+        <img src="{% static 'menu/images/t_logo.png' %}" alt="Telegram">
+    </a>
+</div>
+<div class="menu-container">
+    <div class="tab-container">
+        {% for category in categories %}
+            <button class="tab-button {% if forloop.first %}active{% endif %}"
+                    data-tab="{{ category.slug }}">
+                {{ category.name }}
+            </button>
+        {% endfor %}
+    </div>
+
+    {% for category in categories %}
+    <div class="tab-content" id="{{ category.slug }}"
+         {% if not forloop.first %}style="display: none;"{% endif %}>
+        <h2 class="category-title">{{ category.name }}</h2>
+
+        <div class="dishes-grid">
+            {% for dish in category.dishes.all %}
+            <div class="dish-item">
+                <div class="dish-image-wrapper">
+                    {% if dish.image %}
+                        <img src="{{ dish.image.url }}" alt="{{ dish.name }}" class="dish-image">
+                    {% else %}
+                        <img src="{% static 'menu/images/default.jpg' %}" alt="{{ dish.name }}" class="dish-image">
+                    {% endif %}
+                </div>
+                <div class="dish-text-content">
+                    <h3 class="dish-name">{{ dish.name }}</h3>
+                    {% if dish.description %}
+                        <p class="dish-description">{{ dish.description }}</p>
+                    {% endif %}
+                    <div class="dish-meta">
+                        <span class="dish-weight">{{ dish.weight }}</span>
+                        <span class="dish-price">{{ dish.price }} руб.</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
