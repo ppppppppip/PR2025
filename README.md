@@ -8,7 +8,8 @@
 Технологии:
 1. Django
 2. HTML/CSS
-   
+3. JavaScript
+
 Шаги установки:
 
 1.Переход к корневой папке проекта: cd restaurantmenu
